@@ -7,7 +7,9 @@ const SECRET_NAMES = ['SUPABASE_SECRET_KEY', 'TURNSTILE_SECRET_KEY', 'OWNER_EMAI
 async function clientFiles(root: string): Promise<string[]> {
   const out: string[] = [];
   async function walk(dir: string) {
+    const SKIP = new Set(['node_modules', '.next', '.git', 'coverage']);
     for (const entry of await readdir(dir, { withFileTypes: true })) {
+      if (entry.isDirectory() && SKIP.has(entry.name)) continue;
       const path = join(dir, entry.name);
       if (entry.isDirectory()) await walk(path);
       else if (/\.(ts|tsx|js|jsx)$/.test(entry.name)) {

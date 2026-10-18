@@ -4,24 +4,13 @@ import { AccessError, requireUser } from '@/lib/auth/guards';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { createServiceSupabaseClient } from '@/lib/supabase/service';
 import { messageSubmissionSchema } from '@/lib/validation/message';
+import { classifyMessageActor } from '@/lib/messages/classify-actor';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 const MAX_BODY_BYTES = 8_000;
 
-export function classifyMessageActor(
-  identity: VerifiedIdentity,
-  configuredOwnerEmail: string | undefined,
-): 'owner' | 'requester' {
-  if (
-    configuredOwnerEmail?.trim() &&
-    identity.email.trim().toLowerCase() === configuredOwnerEmail.trim().toLowerCase()
-  ) {
-    return 'owner';
-  }
-  return 'requester';
-}
 
 function notFoundResponse() {
   return NextResponse.json(

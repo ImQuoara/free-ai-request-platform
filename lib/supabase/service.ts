@@ -1,8 +1,9 @@
 import 'server-only';
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/lib/supabase/database.types';
 
-let serviceClient: ReturnType<typeof createClient> | undefined;
+let serviceClient: SupabaseClient<Database> | undefined;
 
 export function createServiceSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -12,7 +13,7 @@ export function createServiceSupabaseClient() {
     throw new Error('Missing server-only Supabase environment configuration.');
   }
 
-  serviceClient ??= createClient(url, secretKey, {
+  serviceClient ??= createClient<Database>(url, secretKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mapGuardRpcError } from '@/app/api/request/route';
+import { mapGuardRpcError } from '@/lib/request/guard-error';
 
 describe('request route guard mapping', () => {
   it('maps cooldown metadata to HTTP 429 response data', () => {
