@@ -1,4 +1,4 @@
-import { isBlockedAiCrawler } from '../../lib/security/crawlers';
+import { isBlockedAiCrawler } from '../../lib/security/crawlers.ts';
 
 type EdgeContext = {
   next(): Promise<Response>;
